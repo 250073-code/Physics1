@@ -51,16 +51,13 @@ public class LauncherController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical") * _sensitivity * 20f * Time.deltaTime;
 
         _currentYaw += horizontalInput;
-        _currentPitch -= verticalInput; // Минус, чтобы W нагибало пушку вверх
+        _currentPitch -= verticalInput;
 
-        // Применяем те же самые границы (Clamp)
         _currentPitch = Mathf.Clamp(_currentPitch, _minVerticalAngle, _maxVerticalAngle);
         _currentYaw = Mathf.Clamp(_currentYaw, -_horizontalLimit, _horizontalLimit);
 
-        // Поворачиваем пушку
         transform.localRotation = Quaternion.Euler(_currentPitch, _currentYaw, 0);
 
-        // Камера следует за пушкой
         if (_cameraTransform != null)
         {
             Quaternion camRotation = Quaternion.Euler(_currentPitch, _currentYaw, 0);
